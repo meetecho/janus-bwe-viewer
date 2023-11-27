@@ -1,0 +1,29 @@
+{
+	"name": "janus-bwe-viewer",
+	"description": "BWE stats viewer for the Janus WebRTC Server",
+	"version": "0.0.1",
+	"keywords": [
+		"janus",
+		"webrtc",
+		"meetecho",
+		"bwe"
+	],
+	"author": {
+		"name": "Lorenzo Miniero",
+		"email": "lorenzo@meetecho.com"
+	},
+	"main": "src/server.js",
+	"dependencies": {
+		"colors": "^1.4.0",
+		"debug": "^4.3.3",
+		"express": "^4.18.2",
+		"socket.io": "^4.7.2"
+	},
+	"private": true,
+	"scripts": {
+		"build": "npm install --production",
+		"build-config": "node -e \"var fs = require('fs');fs.createReadStream('src/config.template.js').pipe(fs.createWriteStream('src/config.js'));\"",
+		"start": "DEBUG=bwe:*,-bwe:debug node src/server.js",
+		"debug": "DEBUG=bwe:* node src/server.js"
+	}
+}
