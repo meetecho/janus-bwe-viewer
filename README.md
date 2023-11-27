@@ -3,7 +3,7 @@ Janus BWE Stats
 
 This is a viewer for BWE (Bandwidth Estimation) stats originated by the [Janus WebRTC Server](https://github.com/meetecho/janus-gateway/), specifically for stats that can be originated by [this PR](https://github.com/meetecho/janus-gateway/pull/3278) (which at the time of writing hasn't been merged yet). You can find more information on the integration of BWE in Janus in [this presentation](https://www.youtube.com/watch?v=7L35Q_5aqCc) and [this blog post](https://www.meetecho.com/blog/bwe-janus/).
 
-It's a web application that uses [Chart.js](https://www.chartjs.org/) to display the data, and it was created as a helper tool to debug and study BWE sessions, in order to try and tweak/improve the new BWE algorithm in Janus. It works by either importing offline captures, through pre-saved CSV files, or by showing stats live, if using live injection of stats via UDP. Notice that, since this is currently a prototype, only a single live session can be active at any given time: maybe in the future I'll make this more flexible in the future, but it's currently not a priority.
+It's a web application that uses [Chart.js](https://www.chartjs.org/) to display the data, and it was created as a helper tool to debug and study BWE sessions, in order to try and tweak/improve the new BWE algorithm in Janus. It works by either importing offline captures, through pre-saved CSV files, or by showing stats live, if using live injection of stats via UDP. Notice that, since this is currently a prototype, only a single live session can be active at any given time: maybe in the future I'll make this more flexible, but it's currently not a priority.
 
 ![Bitrates](images/graph-bitrates.png)
 
@@ -21,10 +21,14 @@ To install the dependencies, run:
 
 # Configuration
 
-The configuration file for the application can be found under `src/config.js`. There's just two parameters that need to be specified:
+The application requires a configuration file in `src/config.js`. A template is provided in `src/config.template.js`, that can be copied to `src/config.js` by running:
 
-* `api_port` is the port the application will bind to for the web application backend;
-* `udp_port` is the port the application will bind to for getting live stats (optional).
+	npm run build-config
+
+The templace will come with placeholder values that need to be set properly. There's just two parameters that need to be specified:
+
+* `api_port`: the port the application will bind to for the web application backend;
+* `udp_port`: the port the application will bind to for getting live stats (optional).
 
 # Starting
 
@@ -79,7 +83,7 @@ The following is a very simple snippet that can be added to the VideoRoom demo c
 		}
 	});
 
-This snippet is instructing Janus to save both offline stats (to a CSV file in `/tmp`) and doing live stats (to `127.0.0.1:8878`, since `udp_port` was set to `8878`). Of course you can choose to do only one, rather than both. Remember that at the moment live stats will NOT work if multiple sessions are pushing stats at the same time.
+This snippet is instructing Janus to save both offline stats (to a CSV file in `/tmp`) and doing live stats (to `127.0.0.1:8878`, since `udp_port` was set to `8878`). Of course you can choose to do only one, rather than both. Remember that at the moment live stats will NOT work if multiple sessions are pushing stats at the same time; there's no limits to how many session can have their stats saved to CSV at the same time, instead.
 
 ## Content of the stats
 
